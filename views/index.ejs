@@ -1,11 +1,261 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Start your development with a Dashboard for Bootstrap 4."
+    />
+    <meta name="author" content="Creative Tim" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/brand/favicon.png" type="image/png" />
+    <!-- Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+    />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="assets/vendor/nucleo/css/nucleo.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
+      type="text/css"
+    />
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link
+      rel="stylesheet"
+      href="assets/css/argon.css?v=1.2.0"
+      type="text/css"
+    />
   </head>
+
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+      <!-- Topnav -->
+      <nav
+        class="
+          navbar navbar-top navbar-expand navbar-dark
+          bg-primary
+          border-bottom
+        "
+      >
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Search form -->
+            <form
+              class="navbar-search navbar-search-light form-inline mr-sm-3"
+              id="navbar-search-main"
+            >
+              <div class="form-group mb-0">
+                <div
+                  class="input-group input-group-alternative input-group-merge"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Search"
+                    type="text"
+                    id="searchForm"
+                  />
+                </div>
+              </div>
+              <button
+                type="button"
+                class="close"
+                data-action="search-close"
+                data-target="#navbar-search-main"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </form>
+            <!-- Navbar links -->
+            <ul class="navbar-nav align-items-center ml-md-auto">
+              <li class="nav-item d-xl-none">
+                <!-- Sidenav toggler -->
+                <div
+                  class="pr-3 sidenav-toggler sidenav-toggler-dark"
+                  data-action="sidenav-pin"
+                  data-target="#sidenav-main"
+                >
+                  <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item d-sm-none">
+                <a
+                  class="nav-link"
+                  href="#"
+                  data-action="search-show"
+                  data-target="#navbar-search-main"
+                >
+                  <i class="ni ni-zoom-split-in"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Header -->
+      <!-- Header -->
+      <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center py-4">
+              <div class="col-lg-6 col-7">
+                <h6 class="h2 text-white d-inline-block mb-0">Cricket</h6>
+              </div>
+
+              <div class="col-lg-6 col-5 text-right">
+                <a class="btn btn-sm btn-neutral" id="prevBtn">Prev</a>
+                <a class="btn btn-sm btn-neutral" id="nextBtn">Next</a>
+
+                <select id="sortBtn">
+                  <option value="publishedAt" selected>Date</option>
+                  <option value="title">Title</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page content -->
+      <div class="container-fluid mt--6">
+        <div class="row" id="feed"></div>
+        <!-- Footer -->
+        <footer class="footer pt-0">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+              <div class="copyright text-center text-lg-left text-muted">
+                &copy; <%= (new Date()).getFullYear() %>
+                <a class="font-weight-bold ml-1" target="_blank"
+                  >Soham Parekh</a
+                >
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="https://unpkg.com/ejs@3.1.6/ejs.min.js"></script>
+    <!-- Core -->
+    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="/assets/js/argon.js?v=1.2.0"></script>
+    <script>
+      let q = $("#searchForm").val(),
+        page = 0,
+        sortBy = $("#sortBtn").val(),
+        hasPrev = false,
+        hasNext = false;
+
+      const videoTemplate = `
+        <? for(const video of videos) { ?>
+        <div class="col-xl-6">
+          <div class="card" style="width: 100%">
+            <img
+              class="card-img-top"
+              src="<?= video.thumbnails.high.url ?>"
+              alt="<?= video.title ?> thumbnail"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><?= video.title ?></h5>
+              <p class="card-text"><?= video.description ?></p>
+              <a
+                href="https://www.youtube.com/watch?v=<?= video.videoId ?>"
+                class="btn btn-primary"
+                >Watch</a
+              >
+            </div>
+          </div>
+        </div>
+        <? } ?>
+      `;
+
+      $("#navbar-search-main").on("submit", (e) => {
+        e.preventDefault();
+        q = $("#searchForm").val();
+        getVideos();
+      });
+
+      $("#sortBtn").on("change", (e) => {
+        sortBy = $("#sortBtn").val();
+        getVideos();
+      });
+
+      $("#nextBtn").on("click", () => {
+        if (hasNext) {
+          page = page + 1;
+          getVideos();
+        }
+      });
+
+      $("#prevBtn").on("click", () => {
+        if (hasPrev) {
+          page = page - 1;
+          getVideos();
+        }
+      });
+
+      const getVideos = async () => {
+        try {
+          const res = await fetch(
+            `/videos?q=${q}&sortBy=${sortBy}&page=${page}`,
+            {
+              method: "GET",
+              cache: "no-cache",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await res.json();
+
+          const htmlString = ejs.render(
+            videoTemplate,
+            {
+              videos: data.videos,
+            },
+            {
+              delimiter: "?",
+            }
+          );
+
+          hasPrev = data.hasPrev;
+          hasNext = data.hasNext;
+
+          $("#feed").empty();
+          $("#feed").append(htmlString);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      getVideos();
+    </script>
   </body>
 </html>

@@ -6,3 +6,6 @@ package-lock.json
 
 # Eslint config
 .eslintrc.json
+
+# Assets
+public/
