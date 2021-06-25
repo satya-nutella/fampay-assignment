@@ -156,6 +156,12 @@
       </div>
     </div>
     <script src="https://unpkg.com/ejs@3.1.6/ejs.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.5/dayjs.min.js"
+      integrity="sha512-n6mJ6AqoohFfbgx3x7N162B/zRNs5x8uvsStlHC+LCvqwKW7oiucE07Ehatg62ybx6Vo1ctaZwm/4sSRUTSIQA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!-- Core -->
     <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -184,6 +190,7 @@
             />
             <div class="card-body">
               <h5 class="card-title"><?= video.title ?></h5>
+              <span class="badge badge-pill badge-primary"><?= dayjs(video.publishedAt).format("DD-MM-YYYY") ?></span>
               <p class="card-text"><?= video.description ?></p>
               <a
                 href="https://www.youtube.com/watch?v=<?= video.videoId ?>"
