@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 
+const initFetchVideoJob = require("./jobs/fetch-video");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
@@ -54,5 +55,7 @@ app.use((err, req, res) => {
   res.status(err.status || 500);
   res.render("error");
 });
+
+initFetchVideoJob();
 
 module.exports = app;

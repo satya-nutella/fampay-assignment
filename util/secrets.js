@@ -1,8 +1,8 @@
 require("dotenv-defaults").config();
 
-const envs = new Set(["MONGODB_URI"]);
+const envs = new Set(["MONGODB_URI", "YOUTUBE_API_KEY"]);
 
-const required = new Set(["MONGODB_URI"]);
+const required = new Set(["MONGODB_URI", "YOUTUBE_API_KEY"]);
 
 for (const e of envs) {
   const val = process.env[e];

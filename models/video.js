@@ -7,12 +7,24 @@ const videoSchema = new mongoose.Schema(
     channelTitle: String,
     videoId: String,
     description: String,
-    thumbnailUrls: [
-      {
-        type: String,
+    thumbnails: {
+      default: {
+        url: String,
+        width: Number,
+        height: Number,
       },
-    ],
-    publishedOn: Date,
+      medium: {
+        url: String,
+        width: Number,
+        height: Number,
+      },
+      high: {
+        url: String,
+        width: Number,
+        height: Number,
+      },
+    },
+    publishedAt: Date,
   },
   {
     timestamps: true,
