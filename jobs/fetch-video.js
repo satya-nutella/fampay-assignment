@@ -5,14 +5,14 @@ const VideoModel = require("../models/video");
 const secrets = require("../util/secrets");
 
 module.exports = () => {
-  cron.schedule("*/10 * * * *", async () => {
+  cron.schedule("*/5 * * * *", async () => {
     try {
       const service = google.youtube({
         version: "v3",
         auth: secrets.YOUTUBE_API_KEY,
       });
 
-      const publishedAfter = dayjs().subtract(1, "hour").toISOString();
+      const publishedAfter = dayjs().subtract(5, "minute").toISOString();
       const {
         data: { items },
       } = await service.search.list({
@@ -20,6 +20,7 @@ module.exports = () => {
         maxResults: 50,
         order: "date",
         q: secrets.YOUTUBE_SEARCH_QUERY,
+        relevanceLanguage: "en",
         publishedAfter,
       });
 

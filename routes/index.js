@@ -6,14 +6,24 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const page = req.query.page || 0;
-  const videos = await VideoModel.find(
-    {},
-    {},
-    {
-      skip: page * 10,
-      limit: 10,
-    }
-  );
+  const { q } = req.query;
+
+  let videos;
+
+  if (q) {
+    videos = await VideoModel.fuzzySearch({
+      query: q,
+    });
+  } else {
+    videos = await VideoModel.find(
+      {},
+      {},
+      {
+        skip: page * 10,
+        limit: 10,
+      }
+    );
+  }
 
   res.status(StatusCodes.OK).json(videos);
 });

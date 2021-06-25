@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseFuzzySearching = require("mongoose-fuzzy-searching");
 
 const videoSchema = new mongoose.Schema(
   {
@@ -30,5 +31,9 @@ const videoSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+videoSchema.plugin(mongooseFuzzySearching, {
+  fields: ["title", "description"],
+});
 
 module.exports = mongoose.model("Video", videoSchema);
