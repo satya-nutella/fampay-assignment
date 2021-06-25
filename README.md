@@ -36,6 +36,12 @@ YOUTUBE_SEARCH_QUERY =
 
 **Note:** Fields that don't have a default value are _required_
 
+**Note:** In case of multiple API keys, provide them as "," delimited list of keys like so:
+
+```
+YOUTUBE_API_KEY = "<API_KEY1>, <API_KEY2>..."
+```
+
 3. Install dependencies
 
 `npm install`
