@@ -1,0 +1,8 @@
+# Node modules
+node_modules/
+
+# lock files
+package-lock.json
+
+# Eslint config
+.eslintrc.json
