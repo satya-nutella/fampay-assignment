@@ -7,7 +7,6 @@ const logger = require("morgan");
 
 const initFetchVideoJob = require("./jobs/fetch-video");
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 const secrets = require("./util/secrets");
 
@@ -38,7 +37,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
