@@ -1,6 +1,7 @@
 const express = require("express");
 const { ReasonPhrases, StatusCodes } = require("http-status-codes");
 const VideoModel = require("../models/video");
+const logger = require("../util/logger");
 const secrets = require("../util/secrets");
 
 const router = express.Router();
@@ -51,6 +52,9 @@ router.get("/videos", async (req, res) => {
       totalPages,
     });
   } catch (err) {
+    logger.error("GET /videos", {
+      error: err,
+    });
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(ReasonPhrases.INTERNAL_SERVER_ERROR);

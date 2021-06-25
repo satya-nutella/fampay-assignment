@@ -2,6 +2,8 @@ require("dotenv-defaults").config();
 
 const envs = new Set([
   "MONGODB_URI",
+  "NODE_ENV",
+  "PORT",
   "YOUTUBE_API_KEY",
   "YOUTUBE_SEARCH_QUERY",
 ]);

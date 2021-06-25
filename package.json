@@ -23,7 +23,8 @@
     "mongoose": "^5.12.14",
     "mongoose-fuzzy-searching": "^2.0.2",
     "morgan": "^1.10.0",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

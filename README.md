@@ -6,7 +6,7 @@ To make an API to fetch latest videos sorted in reverse chronological order of t
 
 ### Basic Functionalities
 
-- Cron Job to constantly fetch data in the background every five minutes
+- Cron Job to constantly fetch data in the background every minute
 - GET API, `/videos` for fetching videos supporting options like sorting, fuzzy searching and pagination
 - Search API which also supports fuzzy matching for situations like `How to make a tea?` matched with `tea how`
 - Dashboard to access the videos with options to filter and search
