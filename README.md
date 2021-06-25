@@ -33,9 +33,9 @@ MONGODB_URI =
 YOUTUBE_API_KEY =
 YOUTUBE_SEARCH_QUERY =
 ```
+You will need a YOUTUBE DATA API key in order to run this app. Follow the instructions on [this page](https://developers.google.com/youtube/v3/getting-started) to get one.
 
 **Note:** Fields that don't have a default value are _required_
-
 **Note:** In case of multiple API keys, provide them as "," delimited list of keys like so:
 
 ```
@@ -75,3 +75,8 @@ and then run,
 ```
 docker-compose up -d
 ```
+
+### Resources
+
+1. https://demos.creative-tim.com/argon-design-system/#/presentation
+2. https://developers.google.com/youtube/v3
